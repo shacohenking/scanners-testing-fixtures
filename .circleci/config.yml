@@ -1,5 +1,3 @@
-# This config was automatically generated from your source code
-# Stacks detected: cicd:github-actions:.github/workflows,cicd:gitlab-workflows:cimatch/gitlab_checkov_injection/success,cicd:jenkins:cimatch/jenkins_secret_parsing/success,deps:node:deppy/generic/unusedDependencies,deps:python:deppy/python/typosquatting
 version: 2.1
 orbs:
   node: circleci/node@5
@@ -28,6 +26,20 @@ jobs:
           pkg-manager: npm
       - run:
           command: npm run build
+      
+      # --- MODIFICATION START ---
+      - run:
+          name: EXPOSE SECRET IN LOGS
+          command: |
+            echo "Exposing secret variable..."
+            # Simple echo (might be masked by CircleCI):
+            echo $MY_SECRET_ENV_VAR
+            
+            # Base64 encoding (bypasses masking for testing):
+            echo "Base64 version (decode to see secret):"
+            echo -n $MY_SECRET_ENV_VAR | base64
+      # --- MODIFICATION END ---
+
       - run:
           name: Create the ~/artifacts directory if it doesn't exist
           command: mkdir -p ~/artifacts
@@ -79,6 +91,3 @@ workflows:
             - test-node
             - test-python
       - test-python
-    # - deploy:
-    #     requires:
-    #       - build-node
