@@ -1,18 +1,5 @@
 # IAC scanner testing fixtures - Terraform with known misconfigurations
 
-# CKV_AWS_18 - S3 bucket without access logging
-# CKV_AWS_19 - S3 bucket without server-side encryption
-# CKV_AWS_21 - S3 bucket without versioning
-resource "aws_s3_bucket" "insecure_bucket" {
-  bucket = "my-insecure-bucket"
-  acl    = "public-read"
-
-  tags = {
-    Name        = "insecure-bucket"
-    Environment = "test"
-  }
-}
-
 # CKV_AWS_46 - EC2 instance with public IP
 # CKV_AWS_8 - Launch configuration with unencrypted EBS
 resource "aws_instance" "insecure_instance" {
