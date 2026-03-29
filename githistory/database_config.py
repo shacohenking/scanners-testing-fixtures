@@ -1,14 +1,16 @@
-# Database configuration - CONTAINS HARDCODED SECRETS (will be removed in next commit)
+# Database configuration - secrets removed, using environment variables
 
-DB_HOST = "production-db.example.com"
-DB_PORT = "5432"
-DB_USER = "admin"
-DB_PASSWORD = "SuperS3cretPr0duction!Pass#2024"
-DB_NAME = "production_app"
+import os
 
-AWS_ACCESS_KEY_ID = "AKIARPIT7QCJZ5BR553U"
-AWS_SECRET_ACCESS_KEY = "DSnPnbAH1QwEu+utk4ZWO/c1KlcYT4/1AgaJ5HLXL"
+DB_HOST = os.environ.get("DB_HOST", "localhost")
+DB_PORT = os.environ.get("DB_PORT", "5432")
+DB_USER = os.environ.get("DB_USER", "app_user")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
+DB_NAME = os.environ.get("DB_NAME", "myapp")
 
-PRIVATE_API_KEY = "sk_live_51HG3jK2eZvKYlo2C0EXAMPLE1234567890abcdef"
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
+
+PRIVATE_API_KEY = os.environ.get("PRIVATE_API_KEY", "")
 
 CONNECTION_STRING = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
