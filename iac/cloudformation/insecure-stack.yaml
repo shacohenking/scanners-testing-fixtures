@@ -1,0 +1,77 @@
+# IAC scanner testing fixtures - CloudFormation with known misconfigurations
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation template with security misconfigurations for IAC scanner testing
+
+Resources:
+  # CKV_AWS_53 - S3 bucket without block public access
+  InsecureS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: insecure-cfn-bucket
+      AccessControl: PublicRead
+
+  # CKV_AWS_26 - SNS topic without encryption
+  InsecureSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: insecure-topic
+
+  # CKV_AWS_27 - SQS queue without encryption
+  InsecureSQSQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: insecure-queue
+
+  # Security group with unrestricted ingress
+  WideOpenSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Wide open security group
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+
+  # RDS instance without encryption
+  InsecureRDS:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t2.micro
+      Engine: mysql
+      MasterUsername: admin
+      MasterUserPassword: password123
+      StorageEncrypted: false
+      PubliclyAccessible: true
+
+  # Lambda function without tracing
+  InsecureLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: insecure-function
+      Runtime: python3.9
+      Handler: index.handler
+      Code:
+        ZipFile: |
+          def handler(event, context):
+            return "Hello"
+      Role: !GetAtt LambdaRole.Arn
+
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: admin-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "*"
+                Resource: "*"

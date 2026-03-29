@@ -1,0 +1,11 @@
+# SCA scanner testing fixtures - Python packages with known vulnerabilities
+flask==1.1.2
+django==3.1.0
+requests==2.25.0
+pyyaml==5.3.1
+jinja2==2.11.2
+cryptography==3.3.1
+pillow==8.1.0
+urllib3==1.26.4
+paramiko==2.7.2
+numpy==1.19.4
