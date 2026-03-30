@@ -23,7 +23,7 @@ spec:
           # CKV_K8S_20 - Running as root
           securityContext:
             runAsUser: 0
-            privileged: true
+            privileged: false
             allowPrivilegeEscalation: true
             readOnlyRootFilesystem: false
           ports:
