@@ -37,16 +37,16 @@ resource "aws_security_group" "wide_open" {
   }
 }
 
-# CKV_AWS_24 - Security group allows SSH from 0.0.0.0/0
+# CKV_AWS_24 - FIXED: Security group now restricts SSH to specific CIDR
 resource "aws_security_group" "ssh_open" {
   name        = "ssh-open-sg"
-  description = "Security group allowing SSH from anywhere"
+  description = "Security group allowing SSH from specific CIDR"
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/8"]
   }
 }
 
