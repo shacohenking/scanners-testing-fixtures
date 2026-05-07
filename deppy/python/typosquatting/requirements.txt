@@ -1,3 +1,2 @@
 diango==1.0.0
 ruamel.yaml.clib=1.1.1
-twliio==1.2.2
