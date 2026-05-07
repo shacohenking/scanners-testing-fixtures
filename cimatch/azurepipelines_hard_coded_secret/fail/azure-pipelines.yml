@@ -1,5 +1,0 @@
-# this has one implicit stage and one implicit job
-pool:
-  vmImage: 'ubuntu-latest'
-steps:
-- bash: echo "##vso[task.setvariable variable=VERSION"
