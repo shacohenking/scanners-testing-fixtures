@@ -1,2 +1,0 @@
-diango==1.0.0
-ruamel.yaml.clib=1.1.1

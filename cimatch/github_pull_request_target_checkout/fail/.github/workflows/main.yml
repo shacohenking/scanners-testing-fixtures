@@ -1,0 +1,17 @@
+name: PR Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Safe: plain pull_request trigger uses a read-only token by default,
+      # so checking out PR head code is not privilege-escalating.
+      - uses: actions/checkout@v4
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm test

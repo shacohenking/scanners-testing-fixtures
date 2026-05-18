@@ -1,0 +1,8 @@
+{
+  "name": "wildcard-version-fixture",
+  "version": "1.0.0",
+  "description": "Fixture: dependency declared with a wildcard '*' version range, allowing any (including malicious) future release to be resolved.",
+  "dependencies": {
+    "lodash": "*"
+  }
+}

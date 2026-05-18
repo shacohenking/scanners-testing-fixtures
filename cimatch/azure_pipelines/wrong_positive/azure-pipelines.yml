@@ -16,14 +16,6 @@ resources:
 stages:
   - stage: Example
     jobs:
-      - job: FailNoTag
-        pool:
-          vmImage: "ubuntu-18.04"
-
-        container: ubuntu
-
-        steps:
-          - script: printenv
       - job: PassDigest
         pool:
           vmImage: "ubuntu-18.04"

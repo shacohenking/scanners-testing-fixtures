@@ -1,0 +1,20 @@
+name: PR Build
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Insecure: pull_request_target runs with write-token in base-repo context,
+      # but we check out the untrusted PR head ref and execute its code.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
